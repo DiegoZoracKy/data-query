@@ -1,0 +1,14 @@
+{
+	"name": "data-query",
+	"version": "0.0.1",
+	"description": "Query|Filter a specific Array or Object Literal ('JSON')",
+	"main": "data-query.js",
+	"author": {
+		"name": "Diego ZoracKy",
+		"email": "diego.zoracky@gmail.com",
+		"url": "diegozoracky.com",
+		"twitter": "@diegozoracky"
+	},
+	"private": true,
+	"directories": {}
+}
