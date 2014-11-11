@@ -41,7 +41,7 @@
 28 silly publish   version: '0.0.1',
 28 silly publish   description: 'Query|Filter a specific Array or Object Literal (\'JSON\')',
 28 silly publish   homepage: 'https://github.com/DiegoZoracKy/data-query',
-28 silly publish   main: './data-query.js',
+28 silly publish   main: './lib/data-query.js',
 28 silly publish   author:
 28 silly publish    { name: 'Diego ZoracKy',
 28 silly publish      email: 'diego.zoracky@gmail.com',
@@ -55,10 +55,10 @@
 28 silly publish   bugs: { url: 'https://github.com/DiegoZoracKy/data-query/issues' },
 28 silly publish   readme: '# dataQuery\n\nQuery|Filter a specific Array or Object Literal (\'JSON\').\n\n## Usage / Examples\n\n```javascript\nvar objToBeQueried = [\n    {\n        id: 1,\n        deep: {\n            obj: {\n                veryDeep: [\n                    \'z\',\n                    \'k\'\n                ]\n            }\n        },\n        twoWithTheSameValue: \'zk\'\n    },\n    {\n        id: 2,\n        deep: {\n            obj: {\n                veryDeep: \'zk\'\n            }\n        }\n    },\n    {\n        id: 3,\n        deep: {\n            obj: {\n                veryDeep: \'kz\'\n            }\n        },\n        twoWithTheSameValue: \'zk\'\n    }\n  ];\n```\nSearching with a clause which only one object will match:\n```javascript\n      dataQuery(objToBeQueried, {id: 1} );\n```\nThe result will be:\n```javascript\n      {id: 1, ...}\n```\nSearching with a clause which more than one object will match\n```javascript\n      dataQuery(objToBeQueried,  {twoWithTheSameValue: \'zk\'} );\n```\nWill return the objects\n```javascript\n      {id: 1, ...} and {id: 3, ...}\n```\nSearching with more than one clause\n```javascript\n      dataQuery(objToBeQueried,  {twoWithTheSameValue: \'zk\', id: 3} );\n```\nThe result will be just the object:\n```javascript\n      [{id: 3, ...}]\n```\n  Searching for a value deep down in the object structure\n```javascript\n      dataQuery(objToBeQueried,  {\n        deep: {\n            obj: {\n                veryDeep: \'zk\'\n            }\n        }\n      });\n```\nresult:\n```javascript\n      [{id: 2 ...}]\n```\n  Searching for multiple values for the same property\n```javascript\n      dataQuery(objToBeQueried, { id: [ 1 , 2 ] });\n```\nresult:\n```javascript\n      [{id: 1 ...}, {id: 2 ...}]\n```\nSearching for multiple values deep down in the object structure\n```javascript\n      dataQuery(objToBeQueried, {\n       deep: {\n           obj: {\n               veryDeep: [\'zk\', \'kz\']\n           }\n       }\n      });\n```\nresult:\n```javascript\n      [{id: 2 ...}, {id: 3 ...}]\n```\n\n',
 28 silly publish   readmeFilename: 'README.md',
-28 silly publish   gitHead: '3cb682555643a4605c07bc3af89784987219352d',
+28 silly publish   gitHead: '28416077e64b614cd4340db8e736a2f385fb3265',
 28 silly publish   _id: 'data-query@0.0.1',
 28 silly publish   scripts: {},
-28 silly publish   _shasum: '9b94d963557e3e07d0d83c75371f0fce0b7118ba',
+28 silly publish   _shasum: 'c288061dc3e31176687c0348af03289b032e685f',
 28 silly publish   _from: '.' }
 29 error Error: This package has been marked as private
 29 error Remove the 'private' field from the package.json to publish it.

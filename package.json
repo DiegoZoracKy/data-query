@@ -14,7 +14,6 @@
 		"type": "MIT",
 		"url": "http://www.opensource.org/licenses/MIT"
 	},
-	"private": true,
 	"directories": {},
 	"repository": {
 		"type": "git",
