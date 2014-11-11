@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"description": "Query|Filter a specific Array or Object Literal ('JSON')",
 	"homepage": "https://github.com/DiegoZoracKy/data-query",
-	"main": "./data-query.js",
+	"main": "./lib/data-query.js",
 	"author": {
 		"name": "Diego ZoracKy",
 		"email": "diego.zoracky@gmail.com",
