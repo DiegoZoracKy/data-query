@@ -1,130 +1,63 @@
-/**
- * dataQuery
- * Query|Filter a specific Array or Object Literal ("JSON")
- * Based on a filter defined and passed by parameter
- *
- * Usage
- *
- * var objToBeQueried = [
- *   {
- *       id: 1,
- *       deep: {
- *           obj: {
- *               veryDeep: [
- *                   'z',
- *                   'k'
- *               ]
- *           }
- *       },
- *       twoWithTheSameValue: 'zk'
- *   },
- *   {
- *       id: 2,
- *       deep: {
- *           obj: {
- *               veryDeep: 'zk'
- *           }
- *       }
- *   },
- *   {
- *       id: 3,
- *       deep: {
- *           obj: {
- *               veryDeep: 'kz'
- *           }
- *       },
- *       twoWithTheSameValue: 'zk'
- *   }
- * ];
- *
- *
- * Searching with a clause which only one object will match:
- *     dataQuery(objToBeQueried, {id: 1} );
- *     Will return the object {id: 1, ...}
- *
- * Searching with a clause which more than one object will match
- *     dataQuery(objToBeQueried,  {twoWithTheSameValue: 'zk'} );
- *     Will return the objects {id: 1, ...} and {id: 3, ...}
- *
- * Searching with more than one clause
- *     dataQuery(objToBeQueried,  {twoWithTheSameValue: 'zk', id: 3} );
- *     Will return just the object {id: 3, ...}
- *
- * Searching for a value deep down in the object structure
- *     dataQuery(objToBeQueried,  {
- *       deep: {
- *           obj: {
- *               veryDeep: 'zk'
- *           }
- *       }
- *     });
- *     Will return the object {id: 2 ...}
- *
- *
- * Searching for multiple values of the same property
- *     dataQuery(objToBeQueried, { id: [ 1 , 2 ] });
- *     Will return the objects {id: 1 ...} and {id: 2 ...}
- *
- * Searching for multiple values deep down in the object structure
- *     dataQuery(objToBeQueried, {
- *      deep: {
- *          obj: {
- *              veryDeep: ['zk', 'kz']
- *          }
- *      }
- *     });
- *     Will return the object {id: 2 ...} and {id: 3 ...}
- */
-var dataQuery = function(dataSrc, filter, modifier) {
+var dataQuery = (function() {
+    'use strict';
 
-    var filterData = function(data, filter) {
-        if (!data)
-            return;
+    return function(dataSrc, filter, modifier) {
 
-        if (!filter)
-            return data;
+        var filterData = function(data, filter) {
+            if (!data)
+                return;
 
-        return data.filter(function(value) {
-            return seek(value, filter);
-        });
-    };
+            if (!filter)
+                return data;
 
-    var seek = function(data, filter) {
-        var found = true;
-        for (var key in filter) {
-            if (!data[key])
-                return false;
+            return data.filter(function(value) {
+                return seek(value, filter);
+            });
+        };
 
-            if (typeof(data[key]) == 'object' && typeof(filter[key]) == 'object') {
+        var seek = function(data, filter) {
+            var found = true;
+            for (var key in filter) {
+                if (!data[key])
+                    return false;
 
-                found &= seek(data[key], filter[key]);
+                if (typeof(data[key]) == 'object' && typeof(filter[key]) == 'object') {
 
-            } else if (filter[key] instanceof Array) {
+                    found &= seek(data[key], filter[key]);
 
-                found &= data[key].indexOf(filter[key]) >= 0;
+                } else if (filter[key] instanceof Array) {
 
-            } else if (modifier && modifier.constructor == Function) {
+                    found &= data[key].indexOf(filter[key]) >= 0;
 
-                found &= modifier(data[key], filter[key]);
+                } else if (modifier && modifier.constructor == Function) {
 
-            } else if (modifier && modifier == '*') {
+                    found &= modifier(data[key], filter[key]);
 
-                found &= (data[key].indexOf(filter[key]) >= 0);
+                } else if (modifier && modifier == '*') {
 
-            } else {
+                    found &= (data[key].indexOf(filter[key]) >= 0);
 
-                found &= (data[key] == filter[key]);
+                } else {
+
+                    found &= (data[key] == filter[key]);
+                }
+            }
+            return found;
+        };
+
+        var objToBeQueried = dataSrc;
+        if (dataSrc.constructor == Object) {
+            var jsonToArray = [];
+            for (var key in dataSrc) {
+                jsonToArray[jsonToArray.length] = dataSrc[key];
             }
         }
-        return found;
+
+        return filterData(objToBeQueried, filter);
     };
 
-    var objToBeQueried = dataSrc;
-    if (dataSrc.constructor == Object) {
-        var jsonToArray = [];
-        for (var key in res)
-            jsonToArray[jsonToArray.length] = res[key];
-    }
+}());
 
-    return filterData(objToBeQueried, filter);
-};
+if (typeof module !== 'undefined') {
+    module.exports = dataQuery;
+}

@@ -2,13 +2,23 @@
 	"name": "data-query",
 	"version": "0.0.1",
 	"description": "Query|Filter a specific Array or Object Literal ('JSON')",
-	"main": "data-query.js",
+	"homepage": "https://github.com/DiegoZoracKy/data-query",
+	"main": "./data-query.js",
 	"author": {
 		"name": "Diego ZoracKy",
 		"email": "diego.zoracky@gmail.com",
 		"url": "diegozoracky.com",
 		"twitter": "@diegozoracky"
 	},
+	"licenses": {
+		"type": "MIT",
+		"url": "http://www.opensource.org/licenses/MIT"
+	},
 	"private": true,
-	"directories": {}
+	"directories": {},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/DiegoZoracKy/data-query.git"
+	},
+	"bugs": "https://github.com/DiegoZoracKy/data-query/issues"
 }
