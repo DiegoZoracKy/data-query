@@ -6,7 +6,7 @@ Query / Filter a set of Object Literal (‘JSON’), that could be an Array or O
 
 * The dataset to be filtered can be an Array of Objects ```[{},{}]``` or a nested Objects structure ```{ key1: {}, key2: {}, }```
 * The path of properties to be matched can be set as a string with a dot notation. e.g. ```'root.level1.level2'```
-* The filtering can be based just on the existence of a path of properties, or also can be checked against a value.
+* The filtering can be based just on the existence of a path of properties, or also can be checked against a value
 * RegEx is supported for the value to be checked e.g. ```['z', /z/]```
 * RegEx also is supported for the name of the properties ```'/^file/'```, even on deep structures ```'root./^file*/.published'```
 
