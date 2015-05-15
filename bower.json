@@ -1,0 +1,28 @@
+{
+	"name": "data-query",
+	"version": "1.0.0",
+	"main": "./lib/data-query.js",
+	"moduleType": ["globals", "node"],
+	"authors": {
+		"name": "Diego ZoracKy",
+		"email": "diego.zoracky@gmail.com",
+		"homepage": "diegozoracky.com",
+		"twitter": "@diegozoracky"
+	},
+	"licenses": "http://www.opensource.org/licenses/MIT",
+	"keywords": [
+		"filter",
+		"query",
+		"regex",
+		"regexp",
+		"json",
+		"array",
+		"filter json",
+		"object literal",
+		"filter array of objects"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/DiegoZoracKy/data-query.git"
+	}
+}
