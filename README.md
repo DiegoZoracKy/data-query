@@ -48,16 +48,14 @@ var objToBeQueried = [{
         filePDF: {
             url: 'http://file.com'
         }
-    },
-    twoWithTheSameValue: 'zk'
+    }
 }, {
     id: 5,
     root: {
         fileDOC: {
             url: 'http://file.com'
         }
-    },
-    twoWithTheSameValue: 'zk'
+    }
 }];
 
 ```
