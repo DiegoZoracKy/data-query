@@ -1,6 +1,6 @@
 {
 	"name": "data-query",
-	"version": "1.0.0",
+	"version": "1.0.11111111111",
 	"main": "./lib/data-query.js",
 	"moduleType": ["globals", "node"],
 	"authors": {
