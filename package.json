@@ -1,7 +1,7 @@
 {
 	"name": "data-query",
-	"version": "0.0.3",
-	"description": "Query|Filter a specific Array or Object Literal ('JSON')",
+	"version": "1.0.0",
+	"description": "Query / Filter a set of Object Literal (‘JSON’), that could be an Array or Object Literal.",
 	"homepage": "https://github.com/DiegoZoracKy/data-query",
 	"main": "./lib/data-query.js",
 	"author": {
@@ -20,11 +20,16 @@
 		"url": "git://github.com/DiegoZoracKy/data-query.git"
 	},
 	"keywords":[
-		"json",
-		"object",
-		"array",
 		"filter",
-		"query"
+		"query",
+		"regex",
+		"regexp",
+		"json",
+		"array",
+		"filter json",
+		"object literal",
+		"filter array of objects"
+
 	],
 	"bugs": "https://github.com/DiegoZoracKy/data-query/issues"
 }
