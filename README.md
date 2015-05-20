@@ -207,7 +207,7 @@ result:
 ```
 result:
 ```javascript
-	  [{id: 3, ...}]
+	  [{id: 3, ...}, {id: 4, ...}]
 ```
 
 
