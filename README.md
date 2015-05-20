@@ -188,3 +188,27 @@ result:
 	  [{id: 5, ...}]
 ```
 
+**Function as a filter :: Having as a param the value of the property matched.**
+```javascript
+	dataQuery(objToBeQueried, 'deep.obj.veryDeep', function(propValue){
+	    return propValue.constructor == Array; // e.g. Only the ones whose value is an Array
+	});
+```
+result:
+```javascript
+	  [{id: 1, ...}]
+```
+
+**Function as a filter :: With the entire object as a param.**
+```javascript
+	dataQuery(objToBeQueried,  function(v){
+   		return v.id > 2 && v.id < 5; // e.g. Matching id in a specific range
+	});
+```
+result:
+```javascript
+	  [{id: 3, ...}]
+```
+
+
+
