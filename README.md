@@ -14,10 +14,6 @@ npm install data-query
 bower install data-query
 ```
 
-Installation
-
-npm install clean-special-chars
-
 ## Key Features and Goals
 
 * The dataset to be filtered can be an Array of Objects ```[{},{}]``` or a nested Objects structure ```{ key1: {}, key2: {}, }```
