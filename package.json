@@ -1,6 +1,6 @@
 {
 	"name": "data-query",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "Query / Filter a set of Object Literal (‘JSON’), that could be an Array or Object Literal.",
 	"homepage": "https://github.com/DiegoZoracKy/data-query",
 	"main": "./lib/data-query.js",
