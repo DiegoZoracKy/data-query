@@ -1,6 +1,6 @@
 # dataQuery
 
-[![Build Status](https://api.travis-ci.org/DiegoZoracKy/data-query.png)](https://travis-ci.org/DiegoZoracKy/data-query)
+[![Build Status](https://api.travis-ci.org/DiegoZoracKy/data-query.svg)](https://travis-ci.org/DiegoZoracKy/data-query)
 
 Query / Filter a set of Object Literal (‘JSON’), that could be an Array or Object Literal.
 
