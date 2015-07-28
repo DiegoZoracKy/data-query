@@ -31,6 +31,9 @@
     "filter array of objects"
   ],
   "bugs": "https://github.com/DiegoZoracKy/data-query/issues",
+  "scripts": {
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
+  },
   "devDependencies": {
     "chai": "^3.2.0",
     "karma": "^0.13.3",
