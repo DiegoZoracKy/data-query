@@ -386,6 +386,7 @@
 				it("Should return 'id' == 5", function() {
 					expect(objQueriedFromStringDotNotation[1].id).to.equal(5);
 				});
+
 			});
 
 		});
