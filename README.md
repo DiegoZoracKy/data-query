@@ -67,7 +67,7 @@ var objToBeQueried = [{
     id: 5,
     root: {
         fileDOC: {
-            url: 'http://file.com'
+            url: 'http://file.com.br'
         }
     }
 }];
