@@ -342,7 +342,7 @@
 			var dataQuery = window.dataQuery;
 
 			it("return should be an Array", function() {
-				expect(dataQuery(objectSource, 'id', 1)).to.be.instanceof(Object);
+				expect(dataQuery(objectSource, 'id', 1).constructor).to.equal(Object);
 			});
 
 			describe("Searching with a clause which only one object will match", function() {
