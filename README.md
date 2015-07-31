@@ -18,16 +18,10 @@ bower install data-query
 
 ## Key Features and Goals
 
-* The dataset to be filtered can be an Array of Objects ```[{},{}]``` or a structure of nested Objects ```{ key1: {}, key2: {}, }```
-
-* The filter can be a simple object literal. e.g. ```{ status: 'published', author: 'zk', }```. The properties included on the filter will be treated like an AND clause, so if all the properties match (but not exclusively), the object will be considered found. *OBS: is there a way to compare objects in a "strict compare" mode, where it will only found the data set when the filter object match in number of properties and its values.*
-
-* The path of a property to be matched and filtered can be set as a string with a dot notation. e.g. ```'root.level1.level2'```
-
-* The filtering can be based just on the existence of a path of properties ```'root.level1.level2'```, or it can be checked against a value ```'someStringValue'``` or an object representing a filter ```{ status: 'published', author: 'zk', }```
-
-* RegEx is supported for the value to be checked e.g. ```['z', /z/]``` e.g. ```/z|k/```, so you can get an OR clause for the value match
-
+* The dataset to be filtered can be an Array of Objects ```[{},{}]``` or a nested Objects structure ```{ key1: {}, key2: {}, }```
+* The path of properties to be matched can be set as a string with a dot notation. e.g. ```'root.level1.level2'```
+* The filtering can be based just on the existence of a path of properties, or also can be checked against a value
+* RegEx is supported for the value to be checked e.g. ```['z', /z/]```
 * RegEx also is supported for the name of the properties ```'/^file/'```, even on deep structures ```'root./^file*/.published'```
 
 ## Usage / Examples
@@ -165,25 +159,16 @@ result:
 	  [{id: 2, ...}, {id: 3, ...}]
 ```
 
-**RegEx :: Filtering based on a property, using RegEx**
-```javascript
-	dataQuery(objToBeQueried, 'root./^file*/', {url: 'http://file.com'});
-```
-result:
-```javascript
-	  [{id: 4, ...}]
-```
-
 **RegEx :: Searching for multiple values deep down in the object structure, using RegEx**
 ```javascript
-	dataQuery(objToBeQueried, 'deep.obj.veryDeep', /z|k/);
+	dataQuery(objToBeQueried, 'deep.obj.veryDeep', [/z/, /k/]);
 ```
 result:
 ```javascript
 	  [{id: 1, ...}, {id: 2, ...}, {id: 3, ...}]
 ```
 
-**RegEx :: Searching for the existence of a property using RegEx**
+**RegEx :: Searching for multiple values deep down in the object structure, using RegEx**
 ```javascript
 	dataQuery(objToBeQueried, 'root./^file*/.url');
 ```
@@ -203,9 +188,8 @@ result:
 
 **Function as a filter :: Having as a param the value of the property matched.**
 ```javascript
-    // e.g. Only the ones whose value is an Array
 	dataQuery(objToBeQueried, 'deep.obj.veryDeep', function(propValue){
-	    return propValue.constructor == Array;
+	    return propValue.constructor == Array; // e.g. Only the ones whose value is an Array
 	});
 ```
 result:
@@ -215,9 +199,8 @@ result:
 
 **Function as a filter :: With the entire object as a param.**
 ```javascript
-    // e.g. Matching id in a specific range
 	dataQuery(objToBeQueried,  function(v){
-   		return v.id > 2 && v.id < 5;
+   		return v.id > 2 && v.id < 5; // e.g. Matching id in a specific range
 	});
 ```
 result:
@@ -225,34 +208,5 @@ result:
 	  [{id: 3, ...}, {id: 4, ...}]
 ```
 
-OBS: For **strict compare**, where it will only found the data set when the filter object match in number of properties and its values, just passe **true** as the last argument. e.g.
 
-```javascript
-    var objToBeQueried = [{
-        id:1,
-        docs:{
-            fileDOC: 'zk.doc',
-            filePDF: 'zk.pdf'
-        }
-    },{
-        id:2,
-        docs:{
-            fileDOC: 'zk.doc'
-        }
-    }]
-
-    // Default method will return: [{id: 1, ...}, {id: 2, ...}]
-	dataQuery(objToBeQueried, 'docs', {
-        fileDOC: 'zk.doc'
-    });
-
-    // Using 'strict compare' method will return: [{id: 2, ...}]
-	dataQuery(objToBeQueried, 'docs', {
-        fileDOC: 'zk.doc'
-    }, true);
-```
-result:
-```javascript
-	  [{id: 4, ...}]
-```
 

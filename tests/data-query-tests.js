@@ -32,16 +32,14 @@
 		id: 4,
 		root: {
 			filePDF: {
-				url: 'http://file.com',
-				url2: 'http://file2.com'
+				url: 'http://file.com'
 			}
 		}
 	}, {
 		id: 5,
 		root: {
 			fileDOC: {
-				url: 'http://file.com.br',
-				url2: 'http://file2.com.br'
+				url: 'http://file.com.br'
 			}
 		}
 	}];
@@ -81,8 +79,7 @@
 			id: 4,
 			root: {
 				filePDF: {
-					url: 'http://file.com',
-					url2: 'http://file2.com'
+					url: 'http://file.com'
 				}
 			}
 		},
@@ -90,8 +87,7 @@
 			id: 5,
 			root: {
 				fileDOC: {
-					url: 'http://file.com.br',
-					url2: 'http://file2.com.br'
+					url: 'http://file.com.br'
 				}
 			}
 		}
@@ -340,68 +336,19 @@
 				});
 			});
 
-			describe("Strict Compare Objects :: From Object", function() {
-
-				var objQueriedByStrictCompare = dataQuery(arraySource, {
-					id: 5,
-					root: {
-						fileDOC: {
-							url: 'http://file.com.br'
-						}
-					}
-				}, true);
-
-				it("Should return nothing", function() {
-					expect(objQueriedByStrictCompare.length).to.equal(0);
-				});
-
-			});
-
-			describe("Strict Compare Objects :: From String/Dot", function() {
-
-				var objQueriedByStrictCompare = dataQuery(arraySource, 'root.fileDOC', {
-					url: 'http://file.com.br',
-				}, true);
-
-				it("Should return nothing", function() {
-					expect(objQueriedByStrictCompare.length).to.equal(0);
-				});
-
-			});
-
-			describe("Filter from string/dot notation", function() {
-
-				var objQueriedFromStringDotNotation = dataQuery(arraySource, 'root./file*/', {
-					url: /file\.com/
-				});
-
-				it("Should return two entries", function() {
-					expect(objQueriedFromStringDotNotation.length).to.equal(2);
-				});
-
-				it("Should return 'id' == 4", function() {
-					expect(objQueriedFromStringDotNotation[0].id).to.equal(4);
-				});
-
-				it("Should return 'id' == 5", function() {
-					expect(objQueriedFromStringDotNotation[1].id).to.equal(5);
-				});
-
-			});
-
 		});
 
 		describe("Object Literal Source", function() {
 			var dataQuery = window.dataQuery;
 
 			it("return should be an Array", function() {
-				expect(dataQuery(objectSource, 'id', 1).constructor).to.equal(Object);
+				expect(dataQuery(objectSource, 'id', 1)).to.be.instanceof(Object);
 			});
 
 			describe("Searching with a clause which only one object will match", function() {
 
 				it("string/dot notation :: should return only one entry", function() {
-					expect(Object.keys(dataQuery(objectSource, 'id', 1)).length).to.equal(1);
+					expect(Object.keys(dataQuery(objectSource, 'id', 1)).length ).to.equal(1);
 				});
 
 				it("Object literal :: should return only one entry", function() {
@@ -430,11 +377,11 @@
 				});
 
 				it("string/dot notation :: should return only two entries", function() {
-					expect(Object.keys(objQueriedDotNotation).length).to.equal(2);
+					expect(Object.keys( objQueriedDotNotation ).length).to.equal(2);
 				});
 
 				it("Object literal :: should return only two entries", function() {
-					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(2);
+					expect(Object.keys( objQueriedObjectLiteral ).length).to.equal(2);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 3", function() {
@@ -480,11 +427,11 @@
 				});
 
 				it("string/dot notation :: should return only one entry", function() {
-					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
+					expect(Object.keys( objQueriedDotNotation ).length).to.equal(1);
 				});
 
 				it("Object literal :: should return only one entry", function() {
-					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(1);
+					expect(Object.keys( objQueriedObjectLiteral ).length).to.equal(1);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 2", function() {
@@ -501,11 +448,11 @@
 				});
 
 				it("string/dot notation :: should return only two entries", function() {
-					expect(Object.keys(objQueriedDotNotation).length).to.equal(2);
+					expect(Object.keys( objQueriedDotNotation ).length).to.equal(2);
 				});
 
 				it("Object literal :: should return only one entry", function() {
-					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(2);
+					expect(Object.keys( objQueriedObjectLiteral ).length).to.equal(2);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 1", function() {
@@ -537,11 +484,11 @@
 				});
 
 				it("string/dot notation :: should return only two entries", function() {
-					expect(Object.keys(objQueriedDotNotation).length).to.equal(2);
+					expect(Object.keys( objQueriedDotNotation ).length).to.equal(2);
 				});
 
 				it("Object literal :: should return only one entry", function() {
-					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(2);
+					expect(Object.keys( objQueriedObjectLiteral ).length).to.equal(2);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 2", function() {
@@ -566,7 +513,7 @@
 				var objQueriedDotNotation = dataQuery(objectSource, 'root./^file*/.url');
 
 				it("string/dot notation :: should return only two entries", function() {
-					expect(Object.keys(objQueriedDotNotation).length).to.equal(2);
+					expect(Object.keys( objQueriedDotNotation ).length).to.equal(2);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 4", function() {
@@ -583,7 +530,7 @@
 				var objQueriedDotNotation = dataQuery(objectSource, 'root./^file*/.url', /\.com\.br/);
 
 				it("string/dot notation :: should return only one entry", function() {
-					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
+					expect(Object.keys( objQueriedDotNotation ).length).to.equal(1);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 5", function() {
@@ -598,7 +545,7 @@
 				});
 
 				it("string/dot notation :: should return only one entry", function() {
-					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
+					expect(Object.keys( objQueriedDotNotation ).length).to.equal(1);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 1", function() {
@@ -613,7 +560,7 @@
 				});
 
 				it("Matching id in a specific range (between 2 and 5)", function() {
-					expect(Object.keys(objQueriedByFunction).length).to.equal(2);
+					expect(Object.keys( objQueriedByFunction ).length ).to.equal(2);
 				});
 
 				it("Should return the object where 'id' = 3", function() {
@@ -622,53 +569,6 @@
 
 				it("Should return the object where 'id' = 4", function() {
 					expect(objQueriedByFunction.id4).to.exist;
-				});
-			});
-
-			describe("Filter from string/dot notation", function() {
-
-				var objQueriedFromStringDotNotation = dataQuery(objectSource, 'root./file*/', {
-					url: /file\.com/
-				});
-
-				it("Should return two entries", function() {
-					expect(Object.keys(objQueriedFromStringDotNotation).length).to.equal(2);
-				});
-
-				it("Should return 'id' == 4", function() {
-					expect(objQueriedFromStringDotNotation.id4).to.exist;
-				});
-
-				it("Should return 'id' == 5", function() {
-					expect(objQueriedFromStringDotNotation.id5).to.exist;
-				});
-			});
-
-			describe("Strict Compare Objects :: From Object", function() {
-
-				var objQueriedByStrictCompare = dataQuery(objectSource, {
-					id: 5,
-					root: {
-						fileDOC: {
-							url: 'http://file.com.br'
-						}
-					}
-				}, true);
-
-				it("Should return nothing", function() {
-					expect(Object.keys(objQueriedByStrictCompare).length).to.equal(0);
-				});
-
-			});
-
-			describe("Strict Compare Objects :: From String/Dot", function() {
-
-				var objQueriedByStrictCompare = dataQuery(objectSource, 'root.fileDOC', {
-					url: 'http://file.com.br',
-				}, true);
-
-				it("Should return nothing", function() {
-					expect(Object.keys(objQueriedByStrictCompare).length).to.equal(0);
 				});
 			});
 
