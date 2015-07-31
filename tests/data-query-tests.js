@@ -4,6 +4,12 @@
 
 	var arraySource = [{
 		id: 1,
+		arrayWithAnObject: [
+			1, {
+				z: 'k'
+			},
+			2
+		],
 		deep: {
 			obj: {
 				veryDeep: [
@@ -21,7 +27,7 @@
 			}
 		},
 		someInner: {
-			date: (new Date(2014))
+			date: new Date(2014)
 		}
 	}, {
 		id: 3,
@@ -32,7 +38,7 @@
 		},
 		twoWithTheSameValue: 'zk',
 		someInner: {
-			date: (new Date(2015))
+			date: new Date(2015)
 		}
 	}, {
 		id: 4,
@@ -53,6 +59,12 @@
 	var objectSource = {
 		'id1': {
 			id: 1,
+			arrayWithAnObject: [
+				1, {
+					z: 'k'
+				},
+				2
+			],
 			deep: {
 				obj: {
 					veryDeep: [
@@ -62,7 +74,6 @@
 				}
 			},
 			twoWithTheSameValue: 'zk'
-
 		},
 		'id2': {
 			id: 2,
@@ -72,7 +83,7 @@
 				}
 			},
 			someInner: {
-				date: (new Date(2014))
+				date: new Date(2014)
 			}
 		},
 		'id3': {
@@ -84,7 +95,7 @@
 			},
 			twoWithTheSameValue: 'zk',
 			someInner: {
-				date: (new Date(2015))
+				date: new Date(2015)
 			}
 		},
 		'id4': {
@@ -216,11 +227,11 @@
 				});
 			});
 
-			describe("Searching for multiple values for the same property ( OR )", function() {
+			describe("Searching for multiple values for the same property ( OR ) using RegEx", function() {
 
-				var objQueriedDotNotation = dataQuery(arraySource, 'id', [1, 2]);
+				var objQueriedDotNotation = dataQuery(arraySource, 'id', /1|2/);
 				var objQueriedObjectLiteral = dataQuery(arraySource, {
-					id: [1, 2]
+					id: /1|2/
 				});
 
 				it("string/dot notation :: should return only two entries", function() {
@@ -248,13 +259,13 @@
 				});
 			});
 
-			describe("Searching for multiple values deep down in the object structure ( OR )", function() {
+			describe("Searching for multiple values deep down in the object structure ( OR ) using RegEx", function() {
 
-				var objQueriedDotNotation = dataQuery(arraySource, 'deep.obj.veryDeep', ['zk', 'kz']);
+				var objQueriedDotNotation = dataQuery(arraySource, 'deep.obj.veryDeep', /zk|kz/);
 				var objQueriedObjectLiteral = dataQuery(arraySource, {
 					deep: {
 						obj: {
-							veryDeep: ['zk', 'kz']
+							veryDeep: /zk|kz/
 						}
 					}
 				});
@@ -284,7 +295,7 @@
 				});
 			});
 
-			describe("RegEx :: Searching for multiple values deep down in the object structure, using RegEx", function() {
+			describe("RegEx :: Searching for the existence of a property using RegEx", function() {
 
 				var objQueriedDotNotation = dataQuery(arraySource, 'root./^file*/.url');
 
@@ -351,19 +362,146 @@
 
 			describe("Date Objects as a value to match", function() {
 
-				var objQueriedDotNotation = dataQuery(arraySource, 'someInner.date', (new Date(2015)));
+				var objQueriedDotNotation = dataQuery(arraySource, 'someInner.date', new Date(2015));
 				var objQueriedObjectLiteral = dataQuery(arraySource, {
 					someInner: {
-						date: (new Date(2015))
+						date: new Date(2015)
 					}
 				});
 
-				it("string/dot notation :: Match date (new Date(2015)) should return one entry", function() {
+				it("string/dot notation :: Match date new Date(2015) should return one entry", function() {
 					expect(objQueriedDotNotation.length).to.equal(1);
 				});
 
-				it("string/dot notation :: Match date (new Date(2015)) should return the object where 'id' = 3", function() {
+				it("string/dot notation :: Match date new Date(2015) should return the object where 'id' = 3", function() {
 					expect(objQueriedDotNotation[0].id).to.equal(3);
+				});
+
+				it("Object Literal :: Match date new Date(2015) should return one entry", function() {
+					expect(objQueriedObjectLiteral.length).to.equal(1);
+				});
+
+				it("Object Literal :: Match date new Date(2015) should return the object where 'id' = 3", function() {
+					expect(objQueriedObjectLiteral[0].id).to.equal(3);
+				});
+
+			});
+
+			describe("Comparing Arrays :: Comparing Arrays :: Having a property and a filter as an Array", function() {
+
+				var objQueriedDotNotation = dataQuery(arraySource, 'deep.obj.veryDeep', ['z', 'k']);
+				var objQueriedObjectLiteral = dataQuery(arraySource, {
+					deep: {
+						obj: {
+							veryDeep: [
+								'k',
+								'z'
+							]
+						}
+					}
+				});
+
+				it("string/dot notation :: should return one entry", function() {
+					expect(objQueriedDotNotation.length).to.equal(1);
+				});
+
+				it("string/dot notation :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedDotNotation[0].id).to.equal(1);
+				});
+
+				it("Object Literal :: should return one entry", function() {
+					expect(objQueriedObjectLiteral.length).to.equal(1);
+				});
+
+				it("Object Literal :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedObjectLiteral[0].id).to.equal(1);
+				});
+
+			});
+
+			describe("Comparing an Array against one value", function() {
+
+				var objQueriedDotNotation = dataQuery(arraySource, 'deep.obj.veryDeep', 'z');
+				var objQueriedObjectLiteral = dataQuery(arraySource, {
+					deep: {
+						obj: {
+							veryDeep: 'z'
+						}
+					}
+				});
+
+				it("string/dot notation :: Match should return one entry", function() {
+					expect(objQueriedDotNotation.length).to.equal(1);
+				});
+
+				it("string/dot notation :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedDotNotation[0].id).to.equal(1);
+				});
+
+				it("Object Literal :: Match should return one entry", function() {
+					expect(objQueriedObjectLiteral.length).to.equal(1);
+				});
+
+				it("Object Literal :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedObjectLiteral[0].id).to.equal(1);
+				});
+
+			});
+
+			describe("Comparing an Array against a RegEx", function() {
+
+				var objQueriedDotNotation = dataQuery(arraySource, 'deep.obj.veryDeep', /^z$/);
+				var objQueriedObjectLiteral = dataQuery(arraySource, {
+					deep: {
+						obj: {
+							veryDeep: /^z$/
+						}
+					}
+				});
+
+				it("string/dot notation :: Match should return one entry", function() {
+					expect(objQueriedDotNotation.length).to.equal(1);
+				});
+
+				it("string/dot notation :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedDotNotation[0].id).to.equal(1);
+				});
+
+				it("Object Literal :: Match should return one entry", function() {
+					expect(objQueriedObjectLiteral.length).to.equal(1);
+				});
+
+				it("Object Literal :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedObjectLiteral[0].id).to.equal(1);
+				});
+
+			});
+
+			describe("Array with an Object Literal", function() {
+
+				var objQueriedDotNotation = dataQuery(arraySource, 'arrayWithAnObject', {
+					'z': 'k'
+				});
+				var objQueriedObjectLiteral = dataQuery(arraySource, {
+					arrayWithAnObject: {
+						'z': 'k'
+					}
+				});
+
+				it("string/dot notation :: Match should return one entry", function() {
+					expect(objQueriedDotNotation.length).to.equal(1);
+				});
+
+				it("string/dot notation :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedDotNotation[0].id).to.equal(1);
+				});
+
+				it("Object Literal :: Match should return one entry", function() {
+					expect(objQueriedObjectLiteral.length).to.equal(1);
+				});
+
+				it("Object Literal :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedObjectLiteral[0].id).to.equal(1);
 				});
 
 			});
@@ -474,9 +612,9 @@
 
 			describe("Searching for multiple values for the same property ( OR )", function() {
 
-				var objQueriedDotNotation = dataQuery(objectSource, 'id', [1, 2]);
+				var objQueriedDotNotation = dataQuery(objectSource, 'id', /1|2/);
 				var objQueriedObjectLiteral = dataQuery(objectSource, {
-					id: [1, 2]
+					id: /1|2/
 				});
 
 				it("string/dot notation :: should return only two entries", function() {
@@ -506,11 +644,11 @@
 
 			describe("Searching for multiple values deep down in the object structure ( OR )", function() {
 
-				var objQueriedDotNotation = dataQuery(objectSource, 'deep.obj.veryDeep', ['zk', 'kz']);
+				var objQueriedDotNotation = dataQuery(objectSource, 'deep.obj.veryDeep', /zk|kz/);
 				var objQueriedObjectLiteral = dataQuery(objectSource, {
 					deep: {
 						obj: {
-							veryDeep: ['zk', 'kz']
+							veryDeep: /zk|kz/
 						}
 					}
 				});
@@ -540,7 +678,7 @@
 				});
 			});
 
-			describe("RegEx :: Searching for multiple values deep down in the object structure, using RegEx", function() {
+			describe("RegEx :: Searching for the existence of a property using RegEx", function() {
 
 				var objQueriedDotNotation = dataQuery(objectSource, 'root./^file*/.url');
 
@@ -606,22 +744,136 @@
 
 			describe("Date Objects as a value to match", function() {
 
-				var objQueriedDotNotation = dataQuery(objectSource, 'someInner.date', (new Date(2015)));
+				var objQueriedDotNotation = dataQuery(objectSource, 'someInner.date', new Date(2015));
 				var objQueriedObjectLiteral = dataQuery(objectSource, {
 					someInner: {
-						date: (new Date(2015))
+						date: new Date(2015)
 					}
 				});
 
-				it("string/dot notation :: Match date (new Date(2015)) should return one entry", function() {
+				it("string/dot notation :: Match date new Date(2015) should return one entry", function() {
 					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
 				});
 
-				it("string/dot notation :: Match date (new Date(2015)) should return the object where 'id' = 3", function() {
+				it("string/dot notation :: Match date new Date(2015) should return the object where 'id' = 3", function() {
 					expect(objQueriedDotNotation.id3).to.exist;
 				});
 
+				it("Object Literal :: Match date new Date(2015) should return one entry", function() {
+					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(1);
+				});
+
+				it("Object Literal :: Match date new Date(2015) should return the object where 'id' = 3", function() {
+					expect(objQueriedObjectLiteral.id3).to.exist;
+				});
+
 			});
+
+
+
+			describe("Comparing Arrays :: Comparing Arrays :: Having a property and a filter as an Array", function() {
+
+				var objQueriedDotNotation = dataQuery(objectSource, 'deep.obj.veryDeep', ['z', 'k']);
+				var objQueriedObjectLiteral = dataQuery(objectSource, {
+					deep: {
+						obj: {
+							veryDeep: [
+								'k',
+								'z'
+							]
+						}
+					}
+				});
+
+				it("string/dot notation :: should return one entry", function() {
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
+				});
+
+				it("string/dot notation :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedDotNotation.id1).to.exist;
+				});
+
+				it("Object Literal :: should return one entry", function() {
+					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(1);
+				});
+
+				it("Object Literal :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedObjectLiteral.id1).to.exist;
+				});
+
+			});
+
+			describe("Comparing an Array against one value", function() {
+
+				var objQueriedDotNotation = dataQuery(objectSource, 'deep.obj.veryDeep', 'z');
+				var objQueriedObjectLiteral = dataQuery(objectSource, {
+					deep: {
+						obj: {
+							veryDeep: 'z'
+						}
+					}
+				});
+
+				it("string/dot notation :: Match should return one entry", function() {
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
+				});
+
+				it("string/dot notation :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedDotNotation.id1).to.exist;
+				});
+
+				it("Object Literal :: Match should return one entry", function() {
+					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(1);
+				});
+
+				it("Object Literal :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedObjectLiteral.id1).to.exist;
+				});
+
+			});
+
+			describe("Comparing an Array against a RegEx", function() {
+
+				var objQueriedDotNotation = dataQuery(objectSource, 'deep.obj.veryDeep', /^z$/);
+				var objQueriedObjectLiteral = dataQuery(objectSource, {
+					deep: {
+						obj: {
+							veryDeep: /^z$/
+						}
+					}
+				});
+
+				it("string/dot notation :: Match should return one entry", function() {
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
+				});
+
+				it("string/dot notation :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedDotNotation.id1).to.exist;
+				});
+
+			});
+
+			describe("Array with an Object Literal", function() {
+
+				var objQueriedDotNotation = dataQuery(objectSource, 'arrayWithAnObject', {
+					'z': 'k'
+				});
+				var objQueriedObjectLiteral = dataQuery(objectSource, {
+					arrayWithAnObject: {
+						'z': 'k'
+					}
+				});
+
+				it("string/dot notation :: Match should return one entry", function() {
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
+				});
+
+				it("string/dot notation :: Should return the object where 'id' = 1", function() {
+					expect(objQueriedDotNotation.id1).to.exist;
+				});
+
+			});
+
 
 		});
 

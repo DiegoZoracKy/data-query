@@ -38,6 +38,12 @@ bower install data-query
 
 var objToBeQueried = [{
     id: 1,
+    arrayWithAnObject: [
+        1, {
+            z: 'k'
+        },
+        2
+    ],
     deep: {
         obj: {
             veryDeep: [
@@ -53,6 +59,9 @@ var objToBeQueried = [{
         obj: {
             veryDeep: 'zk'
         }
+    },
+    someInner: {
+        date: new Date(2014)
     }
 }, {
     id: 3,
@@ -61,7 +70,10 @@ var objToBeQueried = [{
             veryDeep: 'kz'
         }
     },
-    twoWithTheSameValue: 'zk'
+    twoWithTheSameValue: 'zk',
+    someInner: {
+        date: new Date(2015)
+    }
 }, {
     id: 4,
     root: {
@@ -134,18 +146,19 @@ result:
 ```
 
 **Searching for multiple values for the same property ( OR )**
-*OBS: "OR clause" using array as a value will be deprecated soon. Use RegEx as shown in the next case*
+
 ```javascript
 
-	dataQuery(objToBeQueried, 'id',  [ 1 , 2 ]);
+	dataQuery(objToBeQueried, 'id',  /1|2/);
 
 	// or by using an Object Literal as a search clause
-	dataQuery(objToBeQueried, { id: [ 1 , 2 ] });
+	dataQuery(objToBeQueried, { id: /1|2/ });
 ```
 result:
 ```javascript
 	  [{id: 1, ...}, {id: 2, ...}]
 ```
+*OBS: "OR clause" using array was deprecated. Use RegEx as shown above case*
 
 **RegEx :: Searching for multiple values deep down in the object structure, using RegEx**
 ```javascript
@@ -156,7 +169,7 @@ result:
 	  [{id: 1, ...}, {id: 2, ...}, {id: 3, ...}]
 ```
 
-**RegEx :: Searching for multiple values deep down in the object structure, using RegEx**
+**RegEx :: Searching for the existence of a property using RegEx at the property path**
 ```javascript
 	dataQuery(objToBeQueried, 'root./^file*/.url');
 ```
@@ -174,11 +187,90 @@ result:
 	  [{id: 5, ...}]
 ```
 
-**Function as a filter :: Having as a param the value of the property matched.**
+**Comparing Arrays :: Having a property and a filter as an Array of Strings or Numbers (not Objects), they will match when both have the same length and the same value on its positions, *regardless of its order***
 ```javascript
+	dataQuery(objToBeQueried, 'deep.obj.veryDeep', [
+        'z',
+        'k'
+    ]);
+
+    // or
+
+    dataQuery(objToBeQueried, {
+        deep: {
+            obj: {
+                veryDeep: [
+                    'k',
+                    'z'
+                ]
+            }
+        }
+    });
+```
+result:
+```javascript
+	  [{id: 1, ...}]
+```
+
+**When comparing an Array against one value or one RegExp, it will return the objects whose one of its positions's values matches with the filter value**
+```javascript
+	dataQuery(objToBeQueried, 'deep.obj.veryDeep', /^z$/)
+	// or
+    dataQuery(objToBeQueried, 'deep.obj.veryDeep', 'z')
+```
+result:
+```javascript
+	  [{id: 1, ...}]
+```
+
+**Comparing an Array with an Object Literal, it will return the objects whose one of its positions's objects matches with the filter value**
+```javascript
+	dataQuery(objToBeQueried, 'arrayWithAnObject', {'z': 'k'});
+	// or
+    dataQuery(objToBeQueried, {
+        arrayWithAnObject: {
+            'z': 'k'
+        }
+    });
+```
+result:
+```javascript
+	  [{id: 1, ...}]
+```
+
+**Comparing Date Objects**
+```javascript
+	dataQuery(objToBeQueried, 'someInner.date', new Date(2014));
+    // or
+    dataQuery(objToBeQueried, {
+        someInner: {
+            date: new Date(2014)
+        }
+    });
+```
+result:
+```javascript
+	  [{id: 2, ...}]
+```
+
+**Function as a filter :: As a param you have the value of the property matched.**
+```javascript
+    // e.g. Only the ones whose value is an Array
 	dataQuery(objToBeQueried, 'deep.obj.veryDeep', function(propValue){
-	    return propValue.constructor == Array; // e.g. Only the ones whose value is an Array
+	    return propValue.constructor == Array;
 	});
+
+	// or using an Object Literal
+
+	dataQuery(objToBeQueried, {
+        deep: {
+            obj: {
+                veryDeep: function(propValue) {
+                    return propValue.constructor == Array;
+                }
+            }
+        }
+    })
 ```
 result:
 ```javascript
@@ -195,6 +287,3 @@ result:
 ```javascript
 	  [{id: 3, ...}, {id: 4, ...}]
 ```
-
-
-
