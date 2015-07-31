@@ -19,6 +19,9 @@
 			obj: {
 				veryDeep: 'zk'
 			}
+		},
+		someInner: {
+			date: (new Date(2014))
 		}
 	}, {
 		id: 3,
@@ -27,7 +30,10 @@
 				veryDeep: 'kz'
 			}
 		},
-		twoWithTheSameValue: 'zk'
+		twoWithTheSameValue: 'zk',
+		someInner: {
+			date: (new Date(2015))
+		}
 	}, {
 		id: 4,
 		root: {
@@ -64,6 +70,9 @@
 				obj: {
 					veryDeep: 'zk'
 				}
+			},
+			someInner: {
+				date: (new Date(2014))
 			}
 		},
 		'id3': {
@@ -73,7 +82,10 @@
 					veryDeep: 'kz'
 				}
 			},
-			twoWithTheSameValue: 'zk'
+			twoWithTheSameValue: 'zk',
+			someInner: {
+				date: (new Date(2015))
+			}
 		},
 		'id4': {
 			id: 4,
@@ -336,6 +348,26 @@
 				});
 			});
 
+
+			describe("Date Objects as a value to match", function() {
+
+				var objQueriedDotNotation = dataQuery(arraySource, 'someInner.date', (new Date(2015)));
+				var objQueriedObjectLiteral = dataQuery(arraySource, {
+					someInner: {
+						date: (new Date(2015))
+					}
+				});
+
+				it("string/dot notation :: Match date (new Date(2015)) should return one entry", function() {
+					expect(objQueriedDotNotation.length).to.equal(1);
+				});
+
+				it("string/dot notation :: Match date (new Date(2015)) should return the object where 'id' = 3", function() {
+					expect(objQueriedDotNotation[0].id).to.equal(3);
+				});
+
+			});
+
 		});
 
 		describe("Object Literal Source", function() {
@@ -348,7 +380,7 @@
 			describe("Searching with a clause which only one object will match", function() {
 
 				it("string/dot notation :: should return only one entry", function() {
-					expect(Object.keys(dataQuery(objectSource, 'id', 1)).length ).to.equal(1);
+					expect(Object.keys(dataQuery(objectSource, 'id', 1)).length).to.equal(1);
 				});
 
 				it("Object literal :: should return only one entry", function() {
@@ -377,11 +409,11 @@
 				});
 
 				it("string/dot notation :: should return only two entries", function() {
-					expect(Object.keys( objQueriedDotNotation ).length).to.equal(2);
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(2);
 				});
 
 				it("Object literal :: should return only two entries", function() {
-					expect(Object.keys( objQueriedObjectLiteral ).length).to.equal(2);
+					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(2);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 3", function() {
@@ -427,11 +459,11 @@
 				});
 
 				it("string/dot notation :: should return only one entry", function() {
-					expect(Object.keys( objQueriedDotNotation ).length).to.equal(1);
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
 				});
 
 				it("Object literal :: should return only one entry", function() {
-					expect(Object.keys( objQueriedObjectLiteral ).length).to.equal(1);
+					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(1);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 2", function() {
@@ -448,11 +480,11 @@
 				});
 
 				it("string/dot notation :: should return only two entries", function() {
-					expect(Object.keys( objQueriedDotNotation ).length).to.equal(2);
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(2);
 				});
 
 				it("Object literal :: should return only one entry", function() {
-					expect(Object.keys( objQueriedObjectLiteral ).length).to.equal(2);
+					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(2);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 1", function() {
@@ -484,11 +516,11 @@
 				});
 
 				it("string/dot notation :: should return only two entries", function() {
-					expect(Object.keys( objQueriedDotNotation ).length).to.equal(2);
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(2);
 				});
 
 				it("Object literal :: should return only one entry", function() {
-					expect(Object.keys( objQueriedObjectLiteral ).length).to.equal(2);
+					expect(Object.keys(objQueriedObjectLiteral).length).to.equal(2);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 2", function() {
@@ -513,7 +545,7 @@
 				var objQueriedDotNotation = dataQuery(objectSource, 'root./^file*/.url');
 
 				it("string/dot notation :: should return only two entries", function() {
-					expect(Object.keys( objQueriedDotNotation ).length).to.equal(2);
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(2);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 4", function() {
@@ -530,7 +562,7 @@
 				var objQueriedDotNotation = dataQuery(objectSource, 'root./^file*/.url', /\.com\.br/);
 
 				it("string/dot notation :: should return only one entry", function() {
-					expect(Object.keys( objQueriedDotNotation ).length).to.equal(1);
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 5", function() {
@@ -545,7 +577,7 @@
 				});
 
 				it("string/dot notation :: should return only one entry", function() {
-					expect(Object.keys( objQueriedDotNotation ).length).to.equal(1);
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
 				});
 
 				it("string/dot notation :: should return the object where 'id' = 1", function() {
@@ -560,7 +592,7 @@
 				});
 
 				it("Matching id in a specific range (between 2 and 5)", function() {
-					expect(Object.keys( objQueriedByFunction ).length ).to.equal(2);
+					expect(Object.keys(objQueriedByFunction).length).to.equal(2);
 				});
 
 				it("Should return the object where 'id' = 3", function() {
@@ -570,6 +602,25 @@
 				it("Should return the object where 'id' = 4", function() {
 					expect(objQueriedByFunction.id4).to.exist;
 				});
+			});
+
+			describe("Date Objects as a value to match", function() {
+
+				var objQueriedDotNotation = dataQuery(objectSource, 'someInner.date', (new Date(2015)));
+				var objQueriedObjectLiteral = dataQuery(objectSource, {
+					someInner: {
+						date: (new Date(2015))
+					}
+				});
+
+				it("string/dot notation :: Match date (new Date(2015)) should return one entry", function() {
+					expect(Object.keys(objQueriedDotNotation).length).to.equal(1);
+				});
+
+				it("string/dot notation :: Match date (new Date(2015)) should return the object where 'id' = 3", function() {
+					expect(objQueriedDotNotation.id3).to.exist;
+				});
+
 			});
 
 		});

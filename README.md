@@ -18,10 +18,16 @@ bower install data-query
 
 ## Key Features and Goals
 
-* The dataset to be filtered can be an Array of Objects ```[{},{}]``` or a nested Objects structure ```{ key1: {}, key2: {}, }```
-* The path of properties to be matched can be set as a string with a dot notation. e.g. ```'root.level1.level2'```
-* The filtering can be based just on the existence of a path of properties, or also can be checked against a value
-* RegEx is supported for the value to be checked e.g. ```['z', /z/]```
+* The dataset to be filtered can be an Array of Objects ```[{},{}]``` or a structure of nested Objects ```{ key1: {}, key2: {}, }```
+
+* The filter can be a simple object literal. e.g. ```{ status: 'published', author: 'zk', }```. The properties included on the filter will be treated like an AND clause, so if all the properties match (but not exclusively), the object will be considered found.
+
+* The path of a property to be matched and filtered can be set as a string with a dot notation. e.g. ```'root.level1.level2'```
+
+* The filtering can be based just on the existence of a path of properties ```'root.level1.level2'```, or it can be checked against a value ```'someStringValue'``` or an object representing a filter ```{ status: 'published', author: 'zk', }```
+
+* RegEx is supported for the value to be checked e.g. ```['z', /z/]``` e.g. ```/z|k/```, so you can get an OR clause for the value match
+
 * RegEx also is supported for the name of the properties ```'/^file/'```, even on deep structures ```'root./^file*/.published'```
 
 ## Usage / Examples
@@ -128,6 +134,7 @@ result:
 ```
 
 **Searching for multiple values for the same property ( OR )**
+*OBS: "OR clause" using array as a value will be deprecated soon. Use RegEx as shown in the next case*
 ```javascript
 
 	dataQuery(objToBeQueried, 'id',  [ 1 , 2 ]);
@@ -140,28 +147,9 @@ result:
 	  [{id: 1, ...}, {id: 2, ...}]
 ```
 
-**Searching for multiple values deep down in the object structure**
-```javascript
-
-	dataQuery(objToBeQueried, 'deep.obj.veryDeep', ['zk', 'kz']);
-
-	// or by using an Object Literal as a search clause
-	dataQuery(objToBeQueried, {
-		deep: {
-			obj: {
-				veryDeep: ['zk', 'kz']
-			}
-		}
-	});
-```
-result:
-```javascript
-	  [{id: 2, ...}, {id: 3, ...}]
-```
-
 **RegEx :: Searching for multiple values deep down in the object structure, using RegEx**
 ```javascript
-	dataQuery(objToBeQueried, 'deep.obj.veryDeep', [/z/, /k/]);
+	dataQuery(objToBeQueried, 'deep.obj.veryDeep', /z|k/);
 ```
 result:
 ```javascript
