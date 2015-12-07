@@ -199,6 +199,31 @@
 
 			});
 
+			describe("Searching with more than one clause using dot notation as a root property of the filter ( AND )", function() {
+
+				var objQueriedObjectLiteral = dataQuery(arraySource, {
+					twoWithTheSameValue: 'zk',
+					'deep.obj.veryDeep': 'kz'
+				});
+
+				it("Object literal notation :: should return the object where 'id' = 3", function() {
+					expect(objQueriedObjectLiteral[0].id).to.equal(3);
+				});
+
+			});
+
+			describe("Searching with more than one clause using dot notation as a root property of the filter, and doing array comparison ( AND )", function() {
+
+				var objQueriedObjectLiteral = dataQuery(arraySource, {
+					twoWithTheSameValue: 'zk',
+					'deep.obj.veryDeep': ['k', 'z']
+				});
+
+				it("Object literal notation :: should return the object where 'id' = 3", function() {
+					expect(objQueriedObjectLiteral[0].id).to.equal(1);
+				});
+			});
+
 			describe("Searching for a value deep down in the object structure", function() {
 
 				var objQueriedDotNotation = dataQuery(arraySource, 'deep.obj.veryDeep', 'zk');
@@ -583,6 +608,30 @@
 					expect(objQueriedObjectLiteral.id3).to.exist;
 				});
 
+			});
+
+			describe("Searching with more than one clause using dot notation as a root property of the filter ( AND )", function() {
+
+				var objQueriedObjectLiteral = dataQuery(objectSource, {
+					twoWithTheSameValue: 'zk',
+					'deep.obj.veryDeep': 'kz'
+				});
+
+				it("Object literal notation :: should return the object where 'id' = 3", function() {
+					expect(objQueriedObjectLiteral.id3).to.exist;
+				});
+			});
+
+			describe("Searching with more than one clause using dot notation as a root property of the filter, and doing array comparison ( AND )", function() {
+
+				var objQueriedObjectLiteral = dataQuery(objectSource, {
+					twoWithTheSameValue: 'zk',
+					'deep.obj.veryDeep': ['k', 'z']
+				});
+
+				it("Object literal notation :: should return the object where 'id' = 3", function() {
+					expect(objQueriedObjectLiteral.id1).to.exist;
+				});
 			});
 
 			describe("Searching for a value deep down in the object structure", function() {
