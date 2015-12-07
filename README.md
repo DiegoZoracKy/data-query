@@ -2,7 +2,12 @@
 
 [![Build Status](https://api.travis-ci.org/DiegoZoracKy/data-query.svg)](https://travis-ci.org/DiegoZoracKy/data-query)
 
-Query / Filter a set of Object Literal (‘JSON’), that could be an Array or Object Literal.
+Lightweight lib (~2kb) to Query / Filter a set of Object Literal ("JSON"), which can be an Array or Object Literal, with powerfull methods to be used as a filter, like: RegEx for value or properties; dot notation to identify properties to be filtered; Array comparison; and more...
+
+Out of the box support for:
+- Node
+- Angular (module name  **zk.dataQuery** and factory name **dataQuery**)
+- Browser (All the good browsers and ie9+)
 
 ## Installation
 
