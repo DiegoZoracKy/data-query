@@ -6,7 +6,7 @@ Lightweight lib (~2kb) to Query / Filter a set of Object Literal ("JSON"), which
 
 Out of the box support for:
 - Node
-- Angular (module name  **zk.dataQuery** and factory name **dataQuery**)
+- Angular (module name **zk.dataQuery**, filter and factory name **dataQuery**)
 - Browser (All the good browsers and ie9+)
 
 ## Installation
