@@ -53,7 +53,8 @@
 			fileDOC: {
 				url: 'http://file.com.br'
 			}
-		}
+		},
+		someNullValue: null
 	}];
 
 	var objectSource = {
@@ -112,7 +113,8 @@
 				fileDOC: {
 					url: 'http://file.com.br'
 				}
-			}
+			},
+			someNullValue: null
 		}
 	};
 
@@ -317,6 +319,24 @@
 
 				it("Object literal :: should return the object where 'id' = 3", function() {
 					expect(objQueriedObjectLiteral[1].id).to.equal(3);
+				});
+			});
+
+			describe("null :: Comparing with a null value", function() {
+				var objQueriedDotNotation = dataQuery(arraySource, 'someNullValue', null);
+
+				it("Object Literal :: Should return the object where 'id' = 5", function() {
+					expect(objQueriedDotNotation[0].id).to.equal(5);
+				});
+			});
+
+			describe("null :: Comparing with a null value by using a function filter", function() {
+				var objQueriedDotNotation = dataQuery(arraySource, 'someNullValue', function(someNullValue) {
+					return someNullValue === null;
+				});
+
+				it("Object Literal :: Should return the object where 'id' = 5", function() {
+					expect(objQueriedDotNotation[0].id).to.equal(5);
 				});
 			});
 
@@ -727,6 +747,24 @@
 				});
 			});
 
+			describe("null :: Comparing with a null value", function() {
+				var objQueriedDotNotation = dataQuery(objectSource, 'someNullValue', null);
+
+				it("Object Literal :: Should return the object where 'id' = 5", function() {
+					expect(objQueriedDotNotation.id5).to.exist;
+				});
+			});
+
+			describe("null :: Comparing with a null value by using a function filter", function() {
+				var objQueriedDotNotation = dataQuery(objectSource, 'someNullValue', function(someNullValue) {
+					return someNullValue === null;
+				});
+
+				it("Object Literal :: Should return the object where 'id' = 5", function() {
+					expect(objQueriedDotNotation.id5).to.exist;
+				});
+			});
+
 			describe("RegEx :: Searching for the existence of a property using RegEx", function() {
 
 				var objQueriedDotNotation = dataQuery(objectSource, 'root./^file*/.url');
@@ -922,10 +960,7 @@
 				});
 
 			});
-
-
 		});
-
 	});
 
 })(chai.expect, describe, it, this);
