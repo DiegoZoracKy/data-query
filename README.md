@@ -9,7 +9,7 @@ Out of the box support for:
 - Angular (module name **zk.dataQuery**, filter and factory name **dataQuery**)
 - Browser (All the good browsers and ie9+)
 
-## Installation
+## Install
 
 ### NPM / Node
 ```javascript
