@@ -9,18 +9,6 @@ Out of the box support for:
 - Angular (module name **zk.dataQuery**, filter and factory name **dataQuery**)
 - Browser (All the good browsers and ie9+)
 
-## Install
-
-### NPM / Node
-```javascript
-npm install data-query
-```
-
-### Bower
-```javascript
-bower install data-query
-```
-
 ## Key Features and Goals
 
 * The dataset to be filtered can be an Array of Objects ```[{},{}]``` or a structure of nested Objects ```{ key1: {}, key2: {} }```
@@ -36,6 +24,26 @@ bower install data-query
 * RegEx is supported for the value to be checked e.g. ```['z', /z/]``` e.g. ```/z|k/```, so you can get an OR clause for the value match
 
 * RegEx also is supported for the name of the properties ```'/^file/'```, even on deep structures ```'root./^file*/.published'```
+
+* Command-line interface (CLI). e.g. ```$ data-query --dataSrc=$(< src.json) --filter=$(< filter.json)```
+
+## Installation
+
+### NPM / Node
+```javascript
+npm install data-query
+```
+
+And to be used via CLI:
+
+```javascript
+npm install data-query -g
+```
+
+### Bower
+```javascript
+bower install data-query
+```
 
 ## Usage / Examples
 
@@ -302,4 +310,11 @@ result:
 result:
 ```javascript
       [{id: 3, ...}, {id: 4, ...}]
+```
+
+**Command-line interface (CLI):**
+The arguments, parameters, are `dataSrc` (JSON data source) and `filter` (JSON filter).
+
+```bash
+    $ data-query --dataSrc=$(<src.json) --filter=$(<filter.json)
 ```
