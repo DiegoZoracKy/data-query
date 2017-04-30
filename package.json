@@ -1,9 +1,10 @@
 {
   "name": "data-query",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "Query / Filter a set of Object Literal (‘JSON’), that could be an Array or Object Literal.",
   "homepage": "https://github.com/DiegoZoracKy/data-query",
   "main": "./lib/data-query.js",
+  "bin": "./bin/cli.js",
   "author": {
     "name": "Diego ZoracKy",
     "email": "diego.zoracky@gmail.com",
@@ -37,5 +38,8 @@
     "karma-phantomjs-launcher": "^0.2.0",
     "mocha": "^2.2.5",
     "phantomjs": "^1.9.17"
+  },
+  "dependencies": {
+    "magic-bins": "^0.4.0"
   }
 }
