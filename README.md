@@ -36,8 +36,11 @@ npm install data-query
 
 And to be used via CLI:
 
-```javascript
+```bash
 npm install data-query -g
+```
+```bash
+npx data-query --help
 ```
 
 ### Bower
@@ -316,5 +319,5 @@ result:
 The arguments, parameters, are `dataSrc` (JSON data source) and `filter` (JSON filter).
 
 ```bash
-    $ data-query --dataSrc=$(<src.json) --filter=$(<filter.json)
+    $ data-query --dataSrc="$(<src.json)" --filter="$(<filter.json)"
 ```
